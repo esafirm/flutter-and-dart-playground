@@ -3,36 +3,58 @@ import 'create_alarm.dart';
 import 'canvas.dart';
 
 void main() => runApp(MyApp());
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Playground',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MenuPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+const MENUS = ['Alarm Screen', 'Canvas Draw'];
 
-  final String title;
+class MenuPage extends StatelessWidget {
+  _onMenuClick(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        _navigate(context, CreateAlarmScreen());
+        break;
+      case 1:
+        _navigate(context, DrawScreen());
+        break;
+      default:
+    }
+  }
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  _navigate(BuildContext context, Widget route) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => route));
+  }
 
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Flutter Playground'),
       ),
-      body: DrawScreen(),
+      body: ListView.separated(
+        padding: EdgeInsets.all(16),
+        separatorBuilder: (context, index) => Divider(),
+        itemCount: MENUS.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(MENUS[index]),
+            onTap: () {
+              _onMenuClick(context, index);
+            },
+          );
+        },
+      ).build(context),
     );
   }
 }
