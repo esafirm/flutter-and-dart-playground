@@ -1,3 +1,4 @@
+import 'package:app/heroes/main.dart';
 import 'package:flutter/material.dart';
 import 'create_alarm.dart';
 import 'canvas.dart';
@@ -17,21 +18,22 @@ class MyApp extends StatelessWidget {
   }
 }
 
-const MENUS = ['Alarm Screen', 'Canvas Draw'];
+typedef Navigation = Widget Function();
+
+class Menu {
+  String name;
+  Navigation navigation;
+
+  Menu({this.name, this.navigation});
+}
+
+List<Menu> menus = [
+  Menu(name: 'Alarm Screen', navigation: () => CreateAlarmScreen()),
+  Menu(name: 'Canvas Draw', navigation: () => DrawScreen()),
+  Menu(name: 'Heroes List', navigation: () => HeroesPage())
+];
 
 class MenuPage extends StatelessWidget {
-  _onMenuClick(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        _navigate(context, CreateAlarmScreen());
-        break;
-      case 1:
-        _navigate(context, DrawScreen());
-        break;
-      default:
-    }
-  }
-
   _navigate(BuildContext context, Widget route) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => route));
   }
@@ -45,12 +47,12 @@ class MenuPage extends StatelessWidget {
       body: ListView.separated(
         padding: EdgeInsets.all(16),
         separatorBuilder: (context, index) => Divider(),
-        itemCount: MENUS.length,
+        itemCount: menus.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(MENUS[index]),
+            title: Text(menus[index].name),
             onTap: () {
-              _onMenuClick(context, index);
+              _navigate(context, menus[index].navigation());
             },
           );
         },
