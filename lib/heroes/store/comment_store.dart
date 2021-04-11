@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'comments.dart';
+import '../comments.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 addComment(String id, Comment comment) async {

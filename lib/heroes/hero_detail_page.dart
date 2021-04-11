@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'datastorage.dart' as storage;
+import 'store/comment_store.dart' as storage;
 import 'superhero.dart';
 import 'comments.dart';
 

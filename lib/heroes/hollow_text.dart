@@ -10,18 +10,13 @@ class HollowText extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.saveLayer(Rect.largest, new Paint());
 
-    TextSpan span = new TextSpan(
-        style: new TextStyle(color: Colors.black, fontSize: 96.0), text: text);
-    TextPainter tp = new TextPainter(
-        text: span,
-        textAlign: TextAlign.left,
-        textDirection: TextDirection.ltr);
+    TextSpan span = new TextSpan(style: new TextStyle(color: Colors.black, fontSize: 96.0), text: text);
+    TextPainter tp = new TextPainter(text: span, textAlign: TextAlign.left, textDirection: TextDirection.ltr);
 
     tp.layout();
     tp.paint(canvas, new Offset(size.width / 2, size.height / 2));
 
     canvas.drawColor(backgroundColor, BlendMode.srcOut);
-
     canvas.restore();
   }
 

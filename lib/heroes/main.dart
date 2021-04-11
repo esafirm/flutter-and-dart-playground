@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'api_requester.dart' as api;
+import 'repository/heroes_repository.dart' as repo;
 import 'hollow_text.dart';
 import 'hero_detail_page.dart';
 import 'superhero.dart';
@@ -24,16 +24,12 @@ class _HeroesPageState extends State<HeroesPage> {
   void initState() {
     super.initState();
 
-    api
-        .fetchHeroes()
-        .then((result) => (result['results']))
-        .then((result) => (setState(() {
-              result.forEach((i) {
-                _gridItems
-                    .add(new GridItem.withHero(new SuperHero.fromJson(i)));
-              });
-              print("Fetch complete!");
-            })));
+    repo.fetchHeroes().then((heroes) => (setState(() {
+          heroes.forEach((hero) {
+            _gridItems.add(new GridItem.withHero(hero));
+          });
+          print("Fetch complete! \n$heroes");
+        })));
   }
 
   Widget buildGrid() => _gridItems.isEmpty
@@ -48,7 +44,7 @@ class _HeroesPageState extends State<HeroesPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(widget.title),
+          title: new Text("Heroes Page"),
         ),
         body: buildGrid());
   }
@@ -63,9 +59,7 @@ class GridItem extends StatelessWidget {
         tag: hero.hashCode,
         child: new Container(
           constraints: new BoxConstraints.expand(),
-          child: new CachedNetworkImage(
-              imageUrl: imageUrl == null ? EMPTY_IMAGE : imageUrl,
-              fit: BoxFit.cover),
+          child: new CachedNetworkImage(imageUrl: imageUrl == null ? EMPTY_IMAGE : imageUrl, fit: BoxFit.cover),
         ),
       );
 
@@ -73,14 +67,10 @@ class GridItem extends StatelessWidget {
       constraints: new BoxConstraints.expand(),
       child: new Center(
           child: new CustomPaint(
-              painter: new HollowText(Colors.black.withAlpha(170),
-                  name.substring(0, 1).toUpperCase()))));
+              painter: new HollowText(Colors.black.withAlpha(100), name.substring(0, 1).toUpperCase()))));
 
   void _handleTap(BuildContext context) {
-    Navigator.push(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => new HeroDetailPage(hero: hero)));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new HeroDetailPage(hero: hero)));
   }
 
   @override
