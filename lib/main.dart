@@ -1,7 +1,7 @@
 import 'package:app/heroes/main.dart';
 import 'package:flutter/material.dart';
-import 'create_alarm.dart';
-import 'canvas.dart';
+import 'play/create_alarm.dart';
+import 'play/canvas.dart';
 
 void main() => runApp(MyApp());
 

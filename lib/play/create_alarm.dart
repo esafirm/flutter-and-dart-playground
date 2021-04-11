@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/views.dart';
+import '../components/views.dart';
 
 class CreateAlarmScreen extends StatefulWidget {
   @override
