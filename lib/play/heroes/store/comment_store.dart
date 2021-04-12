@@ -25,5 +25,5 @@ _setCommentRaw(String storageId, List comments) async {
 _getCommentRaw(String storageId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String rawJson = prefs.getString(storageId);
-  return rawJson == null ? List() : json.decode(rawJson).toList();
+  return rawJson == null ? List.empty() : json.decode(rawJson).toList();
 }

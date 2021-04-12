@@ -1,9 +1,9 @@
 import '../api_requester.dart' as api;
 import '../store/heroes_store.dart' as store;
-import 'package:app/heroes/superhero.dart';
+import '../superhero.dart';
 
 Future<List<SuperHero>> fetchHeroes() async {
-  var localData = await store.getHeroes();
+  final localData = await store.getHeroes();
   if (localData != null) {
     return _jsonToHeroes(localData as List<dynamic>);
   }

@@ -11,7 +11,9 @@ Future<Map> _decode(Future<http.Response> f) => f.then((r) => (json.decode(r.bod
 
 Future<Map> _request(String endpoint) {
   _preRequest(endpoint);
-  return _decode(http.get(_formatUrl(endpoint)));
+  final url = _formatUrl(endpoint);
+  final res = http.get(url, headers: {"Accept": "application/json", "Access-Control-Allow-Origin": "*"});
+  return _decode(res);
 }
 
 void _preRequest(String endpoint) {

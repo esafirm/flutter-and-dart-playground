@@ -13,14 +13,11 @@ class HeroDetailPage extends StatefulWidget {
   State<StatefulWidget> createState() => new HeroDetailPageState(hero);
 }
 
-class HeroDetailPageState extends State<HeroDetailPage>
-    with TickerProviderStateMixin {
+class HeroDetailPageState extends State<HeroDetailPage> with TickerProviderStateMixin {
   HeroDetailPageState(this.hero);
 
   final TextEditingController inputController = new TextEditingController();
   final SuperHero hero;
-
-  final EMPTY_COMMENTS = new List<Comment>();
 
   var imageHeight = 250.0;
   var topComments = [];
@@ -37,7 +34,7 @@ class HeroDetailPageState extends State<HeroDetailPage>
     final comments = await storage.getComments(hero.id);
     setState(() {
       if (comments.isEmpty) {
-        topComments = EMPTY_COMMENTS;
+        topComments = List.empty();
       } else {
         topComments = comments;
       }
@@ -45,12 +42,11 @@ class HeroDetailPageState extends State<HeroDetailPage>
   }
 
   void _handleTap() {
-    final AnimationController controller = new AnimationController(
-        duration: const Duration(milliseconds: 250), vsync: this);
+    final AnimationController controller =
+        new AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
 
     final end = imageHeight > 250.0 ? 250.0 : 500.0;
-    final Animation<double> heightAnimation =
-        new Tween<double>(begin: imageHeight, end: end).animate(controller);
+    final Animation<double> heightAnimation = new Tween<double>(begin: imageHeight, end: end).animate(controller);
 
     heightAnimation.addListener(() {
       setState(() {
@@ -64,21 +60,17 @@ class HeroDetailPageState extends State<HeroDetailPage>
 
   void _addComment(BuildContext context) async {
     final newComment = inputComment;
-    await storage.addComment(
-        hero.id, new Comment(name: "Botak", comment: newComment));
+    await storage.addComment(hero.id, new Comment(name: "Botak", comment: newComment));
     inputController.clear();
     _fetchComments();
   }
 
   Widget buildTopComments() {
-    return topComments == EMPTY_COMMENTS
+    return topComments == List.empty()
         ? new Center(child: new Text("No Comments Yet. Write One!"))
         : topComments.isEmpty
             ? new Center(child: new CircularProgressIndicator())
-            : new Column(
-                children: topComments
-                    .map((c) => new CommentItem(comment: c))
-                    .toList());
+            : new Column(children: topComments.map((c) => new CommentItem(comment: c)).toList());
   }
 
   Widget buildAddComment(BuildContext scaffoldContext) {
@@ -88,13 +80,12 @@ class HeroDetailPageState extends State<HeroDetailPage>
         children: <Widget>[
           new Expanded(
             child: new TextField(
-              decoration:
-                  new InputDecoration(hintText: "Input your comment here..."),
+              decoration: new InputDecoration(hintText: "Input your comment here..."),
               controller: inputController,
               enabled: true,
               onChanged: (text) => setState(() {
-                    inputComment = text;
-                  }),
+                inputComment = text;
+              }),
             ),
           ),
           new MaterialButton(
@@ -118,8 +109,7 @@ class HeroDetailPageState extends State<HeroDetailPage>
               tag: hero.hashCode,
               child: new GestureDetector(
                 onTap: _handleTap,
-                child: new CachedNetworkImage(
-                    imageUrl: hero.image, fit: BoxFit.cover),
+                child: new CachedNetworkImage(imageUrl: hero.image, fit: BoxFit.cover),
               ),
             ),
           ),
@@ -129,9 +119,7 @@ class HeroDetailPageState extends State<HeroDetailPage>
           ),
           new Padding(
               padding: new EdgeInsets.all(10.0),
-              child: new Text("Comments",
-                  style: new TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.bold))),
+              child: new Text("Comments", style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))),
           buildTopComments(),
           buildAddComment(context)
         ],
@@ -157,18 +145,14 @@ class CommentItem extends StatelessWidget {
       padding: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: new Row(
         children: <Widget>[
-          new CircleAvatar(
-              child: new Text(comment.name.substring(0, 1).toUpperCase())),
+          new CircleAvatar(child: new Text(comment.name.substring(0, 1).toUpperCase())),
           new Flexible(
             child: new Padding(
               padding: new EdgeInsets.symmetric(horizontal: 10.0),
-              child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    new Text(comment.name,
-                        style: new TextStyle(fontWeight: FontWeight.w600)),
-                    new Text(comment.comment)
-                  ]),
+              child: new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                new Text(comment.name, style: new TextStyle(fontWeight: FontWeight.w600)),
+                new Text(comment.comment)
+              ]),
             ),
           )
         ],

@@ -47,11 +47,10 @@ class CreateAlarmState extends State<CreateAlarmScreen> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 20),
-            child: RaisedButton(
+            child: ElevatedButton(
               child: Text(this._selectedtime.format(context)),
               onPressed: () async {
-                final time = await showTimePicker(
-                    context: context, initialTime: this._selectedtime);
+                final time = await showTimePicker(context: context, initialTime: this._selectedtime);
                 setState(() {
                   this._selectedtime = time;
                 });
@@ -59,7 +58,7 @@ class CreateAlarmState extends State<CreateAlarmScreen> {
             ),
           ),
           _buildDayRows(),
-          RaisedButton(
+          ElevatedButton(
             child: Text("CREATE"),
             onPressed: () {},
           )
