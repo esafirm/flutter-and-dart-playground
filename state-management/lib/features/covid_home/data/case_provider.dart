@@ -14,6 +14,10 @@ class CaseProvider extends ChangeNotifier {
   String get totalDeaths => _caseResponse?.global.totalDeaths.toString() ?? '...';
   List<Countries> get countries => _caseResponse?.countries ?? List.empty();
 
+  Countries? getCountryByName(String name) {
+    return _caseResponse?.countries.firstWhere((element) => element.country == name);
+  }
+
   void load() async {
     isLoading = true;
     notifyListeners();
