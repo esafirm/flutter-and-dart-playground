@@ -8,5 +8,5 @@ class Http {
         'x-rapidapi-host': Config.key,
       });
 
-  static convidClient() => HttpManager(ApiEndpoint.covideBaseUrl);
+  static covideClient() => HttpManager(ApiEndpoint.covideBaseUrl);
 }

@@ -1,3 +1,4 @@
+import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:clean_archetructure/features/covid_home/data/case_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -57,13 +58,13 @@ class _CovidHomeScreenState extends State<CovidHomeScreen> {
                   child: const Icon(Icons.refresh, size: 30)),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Nav.to(context, '/covid/countries/'),
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.white10),
                     padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
                     shape: MaterialStateProperty.all(
                         const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))))),
-                child: const Text("Fetch by Countries"),
+                child: const Text("Case by Countries"),
               )
             ],
           ),

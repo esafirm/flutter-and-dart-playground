@@ -6,12 +6,13 @@ import 'package:clean_archetructure/config/app_http.dart';
 import 'case_model.dart';
 
 class CaseProvider extends ChangeNotifier {
-  final CovidClient _client = CovidClient(Http.convidClient());
+  final CovidClient _client = CovidClient(Http.covideClient());
   Case? _caseResponse;
 
   bool isLoading = false;
   String get totalConfirmed => _caseResponse?.global.totalConfirmed.toString() ?? '...';
   String get totalDeaths => _caseResponse?.global.totalDeaths.toString() ?? '...';
+  List<Countries> get countries => _caseResponse?.countries ?? List.empty();
 
   void load() async {
     isLoading = true;
