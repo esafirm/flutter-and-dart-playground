@@ -2,11 +2,12 @@ import 'dart:ui';
 
 import 'package:clean_archetructure/features/covid_home/data/case_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class CovidDetailScreen extends StatefulWidget {
-  const CovidDetailScreen({Key? key}) : super(key: key);
+  final String countryName;
+
+  const CovidDetailScreen({Key? key, required this.countryName}) : super(key: key);
 
   @override
   State<CovidDetailScreen> createState() => _CovidDetailScreenState();
@@ -28,23 +29,21 @@ class _CovidDetailScreenState extends State<CovidDetailScreen> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      final countryName = ModalRoute.of(context)?.settings.arguments as String?;
-      print("Country name: $countryName");
 
-      final CaseProvider provider = Provider.of(context, listen: false);
-      final currentCountries = provider.getCountryByName(countryName!);
-      if (currentCountries != null) {
-        setState(() {
-          detail = _CountryDetail(
-              countryName,
-              currentCountries.totalConfirmed.toString(),
-              currentCountries.totalDeaths.toString(),
-              currentCountries.totalRecovered.toString(),
-              "https://flagpedia.net/data/flags/normal/${currentCountries.countryCode.toLowerCase()}.png");
-        });
-      }
-    });
+    final String countryName = widget.countryName;
+
+    final CaseProvider provider = Provider.of(context, listen: false);
+    final currentCountries = provider.getCountryByName(countryName);
+    if (currentCountries != null) {
+      setState(() {
+        detail = _CountryDetail(
+            countryName,
+            currentCountries.totalConfirmed.toString(),
+            currentCountries.totalDeaths.toString(),
+            currentCountries.totalRecovered.toString(),
+            "https://flagpedia.net/data/flags/normal/${currentCountries.countryCode.toLowerCase()}.png");
+      });
+    }
   }
 
   @override

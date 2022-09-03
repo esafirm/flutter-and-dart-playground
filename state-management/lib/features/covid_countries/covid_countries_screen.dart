@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:clean_archetructure/features/covid_home/data/case_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 class CovidCountriesScreen extends StatefulWidget {
   const CovidCountriesScreen({Key? key}) : super(key: key);
@@ -48,9 +48,7 @@ class _CovidCountriesScreenState extends State<CovidCountriesScreen> {
                   itemBuilder: ((context, index) {
                     final item = items[index];
                     return ListTile(
-                      onTap: () {
-                        Nav.to(context, "/covid/countries/detail", arguments: item.countryName);
-                      },
+                      onTap: () => context.go('/countries/${item.countryName}'),
                       title: Text(item.countryName),
                       subtitle: Text(item.totalInfected),
                       trailing: CircleAvatar(

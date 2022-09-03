@@ -1,8 +1,8 @@
-import 'package:clean_archetructure/core/classes/route_manager.dart';
 import 'package:clean_archetructure/features/covid_home/data/case_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 class CovidHomeScreen extends StatefulWidget {
   const CovidHomeScreen({Key? key}) : super(key: key);
@@ -58,7 +58,7 @@ class _CovidHomeScreenState extends State<CovidHomeScreen> {
                   child: const Icon(Icons.refresh, size: 30)),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => Nav.to(context, '/covid/countries/'),
+                onPressed: () => context.go('/countries'),
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.white10),
                     padding: MaterialStateProperty.all(const EdgeInsets.all(20)),

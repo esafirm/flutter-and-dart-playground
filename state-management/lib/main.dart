@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'config/app_providers.dart';
@@ -9,29 +10,32 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Provider.debugCheckInvalidValueType = null;
 
+  Routes.setup();
+
   runApp(MultiProvider(
     providers: appProviders,
-    child: const MyApp(),
+    child: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  final GoRouter _router = Routes.router;
+
   @override
   Widget build(BuildContext context) {
     var tm = context.watch<ThemeProvider>();
-    // print("My App: " + tm.isDarkMode.toString());
 
-    return MaterialApp(
+    return MaterialApp.router(
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
+      routeInformationProvider: _router.routeInformationProvider,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: MyTheme().lightTheme,
       darkTheme: MyTheme().darkTheme,
       themeMode: tm.themeMode,
-      initialRoute: '/covid/home',
-      routes: Routes().routes,
     );
   }
 }
